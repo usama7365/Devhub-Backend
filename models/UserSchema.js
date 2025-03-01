@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const { USER_ROLES } = require('../constants/enums/user');
 
 const UserSchema = new mongoose.Schema(
   {
@@ -12,8 +13,8 @@ const UserSchema = new mongoose.Schema(
     github_id: { type: String },
     role: {
       type: String,
-      enum: ['user', 'moderator', 'admin'],
-      default: 'user',
+      enum: Object.values(USER_ROLES),
+      default: USER_ROLES.USER,
     }, // will change with enums in the future enum based on the roles
     badges: [
       {

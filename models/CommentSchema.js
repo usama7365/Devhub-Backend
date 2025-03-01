@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const { REPORT_REASONS } = require('../constants/enums/comment');
 
 const CommentSchema = new mongoose.Schema(
   {
@@ -16,7 +17,7 @@ const CommentSchema = new mongoose.Schema(
     replies: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Comment' }],
     edited: { type: Boolean, default: false },
     is_reported: { type: Boolean, default: false }, // Indicates if the comment has been reported
-    report_reason: { type: String }, // enum base on the reasons
+    report_reason: { type: String, enum: Object.values(REPORT_REASONS) }, // enum base on the reasons
     is_deleted: { type: Boolean, default: false },
     flagged_by: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }], // Array of users who flagged the comment
     is_anonymous: { type: Boolean, default: false },

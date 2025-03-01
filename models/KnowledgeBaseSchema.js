@@ -1,4 +1,9 @@
 const mongoose = require('mongoose');
+const {
+  KB_CATEGORIES,
+  KB_DIFFICULTY_LEVELS,
+  KB_STATUS,
+} = require('../constants/enums/knowledgeBase');
 
 const KnowledgeBaseSchema = new mongoose.Schema({
   title: { type: String, required: true },
@@ -11,20 +16,13 @@ const KnowledgeBaseSchema = new mongoose.Schema({
   },
   category: {
     type: String,
-    enum: [
-      'Setup Guide',
-      'Best Practices',
-      'Troubleshooting',
-      'Security',
-      'Architecture',
-      'Development',
-    ],
+    enum: Object.values(KB_CATEGORIES),
     required: true,
   },
   subcategory: { type: String },
   difficulty_level: {
     type: String,
-    enum: ['Beginner', 'Intermediate', 'Advanced'],
+    enum: Object.values(KB_DIFFICULTY_LEVELS),
     required: true,
   },
   tags: [{ type: String }],
@@ -44,8 +42,8 @@ const KnowledgeBaseSchema = new mongoose.Schema({
   helpful_votes: { type: Number, default: 0 },
   status: {
     type: String,
-    enum: ['Draft', 'Published', 'Archived', 'Under Review'],
-    default: 'Draft',
+    enum: Object.values(KB_STATUS),
+    default: KB_STATUS.DRAFT,
   },
   attachments: [
     {

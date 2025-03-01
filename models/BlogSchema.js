@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const { BLOG_CATEGORIES, BLOG_STATUS } = require('../constants/enums/blog');
 
 const BlogSchema = new mongoose.Schema(
   {
@@ -16,13 +17,7 @@ const BlogSchema = new mongoose.Schema(
     },
     category: {
       type: String,
-      enum: [
-        'Tutorial',
-        'Best Practices',
-        'Technology',
-        'Career',
-        'Project Showcase',
-      ],
+      enum: Object.values(BLOG_CATEGORIES),
       required: true,
     }, // enum based on the categories
     tags: [{ type: String }],
@@ -31,8 +26,8 @@ const BlogSchema = new mongoose.Schema(
     reading_time: { type: Number }, // avg time to read the blog
     status: {
       type: String,
-      enum: ['draft', 'published', 'archived'],
-      default: 'draft',
+      enum: Object.values(BLOG_STATUS),
+      default: BLOG_STATUS.DRAFT,
     }, // handle the status enum based on the status --> 200words > api -> save.
     comments: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Comment' }],
     liked_by: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],

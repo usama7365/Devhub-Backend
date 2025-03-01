@@ -1,4 +1,9 @@
 const mongoose = require('mongoose');
+const {
+  BUG_PRIORITY,
+  BUG_STATUS,
+  BUG_CATEGORY,
+} = require('../constants/enums/bugReport');
 
 const BugReportSchema = new mongoose.Schema({
   title: { type: String, required: true },
@@ -10,23 +15,17 @@ const BugReportSchema = new mongoose.Schema({
   },
   priority: {
     type: String,
-    enum: ['Low', 'Medium', 'High', 'Critical'],
-    default: 'Medium',
+    enum: Object.values(BUG_PRIORITY),
+    default: BUG_PRIORITY.MEDIUM,
   }, // enum based on the priority
   status: {
     type: String,
-    enum: ['Open', 'In Progress', 'Under Review', 'Resolved', 'Closed'],
-    default: 'Open',
+    enum: Object.values(BUG_STATUS),
+    default: BUG_STATUS.OPEN,
   }, // enum based on the status
   category: {
     type: String,
-    enum: [
-      'Bug',
-      'Feature Request',
-      'Performance',
-      'Security',
-      'Documentation',
-    ],
+    enum: Object.values(BUG_CATEGORY),
     required: true,
   }, // enum based on the category
   environment: {

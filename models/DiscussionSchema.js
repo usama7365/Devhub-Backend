@@ -1,4 +1,8 @@
 const mongoose = require('mongoose');
+const {
+  DISCUSSION_CATEGORIES,
+  DISCUSSION_TYPES,
+} = require('../constants/enums/discussion');
 
 const DiscussionSchema = new mongoose.Schema({
   title: { type: String, required: true },
@@ -10,20 +14,13 @@ const DiscussionSchema = new mongoose.Schema({
   },
   category: {
     type: String,
-    enum: [
-      'Code Help',
-      'Architecture',
-      'DevOps',
-      'Career',
-      'Tools',
-      'Best Practices',
-    ],
+    enum: Object.values(DISCUSSION_CATEGORIES),
     required: true,
   }, // enum base
   type: {
     type: String,
-    enum: ['Question', 'Discussion', 'Poll'],
-    default: 'Discussion',
+    enum: Object.values(DISCUSSION_TYPES),
+    default: DISCUSSION_TYPES.DISCUSSION,
   },
   tags: [{ type: String }],
   // code_snippets: [{
